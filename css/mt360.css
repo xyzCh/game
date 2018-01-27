@@ -1,1 +1,155 @@
+@media screen and (min-width:360px) {
+    #panel {
+        width: 350px;
+        height: 456px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        cursor: pointer;
+        user-select: none;
+    }
 
+    #Grid li {
+        width: 75px;
+        height: 75px;
+        list-style: none;
+        background: #fff3e5;
+        border-radius: 3px;
+        display: inline-block;
+        margin: 5px;
+        float: Left;
+    }
+
+    .Cell {
+        width: 75px;
+        height: 75px;
+        border-radius: 3px;
+        display: block;
+        position: absolute;
+        color: #ddd;
+        line-height: 75px;
+        text-align: center;
+        font-size: 1.8em;
+        font-weight: bold;
+        transition: all 0.15s ease;
+    }
+}
+
+@media screen and (max-width:359px){
+    #panel {
+        width: 310px;
+        height: 456px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    #Grid li {
+        width: 65px;
+        height: 65px;
+        list-style: none;
+        background: #fff3e5;
+        border-radius: 3px;
+        display: inline-block;
+        margin: 5px;
+        float: Left;
+    }
+
+    .Cell {
+        width: 65px;
+        height: 65px;
+        border-radius: 3px;
+        display: block;
+        position: absolute;
+        color: #ddd;
+        line-height: 65px;
+        text-align: center;
+        font-size: 1.8em;
+        font-weight: bold;
+        transition: all 0.15s ease;
+    }
+}
+    #Grid{
+        background:#ddd;
+        padding:5px;
+        border-radius:5px;
+    }
+    #Grid ul{
+        margin:0;
+        padding:0;
+    }
+
+	#Cells{
+		clear:both;
+	}
+    .A_Cell{
+        animation:add 0.35s;
+    }
+    .M_Cell{
+        animation:move 0.15s;
+    }
+    @keyframes add {
+        0%{
+            opacity:0;
+        }
+        66%{
+            transform:scale(0.2,0.2);
+            opacity:0;
+        }
+        100%{
+            transform:scale(1,1);
+            opacity:1.0;
+        }
+    }
+    @keyframes move{
+        0%{
+            transform:scale(1,1);
+        }
+        45%{
+            transform:scale(1.1,1.1);
+        }
+        100%{
+            transform:scale(1,1);
+        }
+    }
+
+    .block{
+        background:#0094ff;
+        text-align:center;
+        border-radius:3px;
+        padding:0 10px;
+        height:40px;
+        line-height:40px;
+        display:inline-block;
+        min-width:80px;
+        margin-bottom:6px;
+        color:#FFF;
+    }
+    .block_s{
+        height:45px;
+        line-height:30px;
+    }
+    #score:before,#best:before{
+        display:block;
+        font-size:12px;
+        height:15px;
+        line-height:15px;
+        text-align:center;
+    }
+        #score:before{
+            content:"score";
+        }
+        #best:before{
+            content:"best";
+        }
+    #re{
+        float:right;
+    }
