@@ -1,106 +1,25 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game</title>
 	<meta charset="utf-8" />
+    <link rel="stylesheet" href="css/mt360.css" />
     <script src="js/grid.js"></script>
     <script>
-
+        Grid.Init();
     </script>
-    <style>
-        #panel{
-            width:370px;
-            height:456px;
-            position:fixed;
-            top:0;
-            bottom:0;
-            left:0;
-            right:0;
-            margin:auto;
-        }
-        #bar{
-            height:50px;
-            margin-bottom:6px;
-            background:#0094ff;
-            border-radius:5px;
-            line-height:50px;
-            text-align:center;
-            color:#fff;
-            font-size:1.5em;
-        }
-
-        #Grid{
-            background:#ddd;
-            padding:5px;
-            border-radius:5px;
-        }
-        #Grid ul{
-            margin:0;
-            padding:0;
-        }
-        #Grid li{
-            width:80px;
-            height:80px;
-            list-style:none;
-            background:#fff3e5;
-            border-radius:3px;
-            display:inline-block;
-            margin:5px;
-		float:left;
-        }
-        .Cell{
-            width:80px;
-            height:80px;
-            border-radius:3px;
-            display:block;
-            position:absolute;
-            color:#ddd;
-            line-height:80px;
-            text-align:center;
-            font-size:1.8em;
-            font-weight:bold;
-            transition:all 0.15s ease;
-        }
-    	#Cells{
-		clear:both;
-    	}
-        .A_Cell{
-            animation:add 0.35s;
-        }
-        .M_Cell{
-            animation:move 0.15s;
-        }
-        @keyframes add {
-            0%{
-                opacity:0;
-            }
-            66%{
-                transform:scale(0.2,0.2);
-                opacity:0;
-            }
-            100%{
-                transform:scale(1,1);
-                opacity:1.0;
-            }
-        }
-        @keyframes move{
-            0%{
-                transform:scale(1,1);
-            }
-            45%{
-                transform:scale(1.1,1.1);
-            }
-            100%{
-                transform:scale(1,1);
-            }
-        }
-    </style>
 </head>
 <body>
     <div id="panel">
-        <div id="bar">分数：<span id="score">0</span></div>
+        <div>
+            <div id="score" class="block block_s"></div>
+        </div>
+        <div>
+            <div id="best" class="block block_s"></div>
+            <div id="re" class="block" onclick="Grid.Restart();">New Game</div>
+        </div>
         <div id="Grid">
             <ul>
                 <li id="Origin"></li><li></li><li></li><li></li>
@@ -109,12 +28,8 @@
                 <li></li><li></li><li></li><li></li>
             </ul>
             <div id="Cells">
-
             </div>
         </div>
     </div>
-    <script>
-        var view = Grid.Init();
-    </script>
 </body>
 </html>
