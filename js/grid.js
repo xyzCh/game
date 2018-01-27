@@ -73,19 +73,18 @@ var Grid = (function () {
         appendCell();
     }
     function _init() {
-        window.ontouch = function (e) {
-            e.preventDefault();
-        }
         window.onresize = Redraw;
         document.onkeyup = function (e) {
             active(e.key);
         }
         var start_x, start_y, end_x, end_y;
         document.ontouchstart = function (e) {
+            e.preventDefault();
             start_x = e.changedTouches[0].clientX;
             start_y = e.changedTouches[0].clientY;
         }
         document.ontouchend = function (e) {
+            e.preventDefault();
             end_x = e.changedTouches[0].clientX;
             end_y = e.changedTouches[0].clientY;
             var offsetx = end_x - start_x;
