@@ -73,8 +73,8 @@ var Grid = (function () {
         appendCell();
     }
     function _init() {
-        window.onload = function () {
-            event.preventDefault();
+        window.ontouch = function (e) {
+            e.preventDefault();
         }
         window.onresize = Redraw;
         document.onkeyup = function (e) {
