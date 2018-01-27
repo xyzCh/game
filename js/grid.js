@@ -71,13 +71,7 @@ var Grid = (function () {
         CELL_SIZE = $("Origin").offsetWidth + 10;
         appendCell();
         appendCell();
-    }
-    function _init() {
-        window.onresize = Redraw;
-        document.onkeyup = function (e) {
-            active(e.key);
-        }
-        var start_x, start_y, end_x, end_y;
+                var start_x, start_y, end_x, end_y;
         $("Grid").ontouchstart = function (e) {
             e.preventDefault();
             start_x = e.changedTouches[0].clientX;
@@ -96,6 +90,12 @@ var Grid = (function () {
                 key = offsety > 0 ? "s" : "w";
             }
             active(key);
+        }
+    }
+    function _init() {
+        window.onresize = Redraw;
+        document.onkeyup = function (e) {
+            active(e.key);
         }
         if (document.readyState != "complete")
             setTimeout(init, 1);
