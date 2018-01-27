@@ -88,7 +88,7 @@ var Grid = (function () {
         document.ontouchend = function (e) {
             end_x = e.changedTouches[0].clientX;
             end_y = e.changedTouches[0].clientY;
-            var offsetx = end_x - start_y;
+            var offsetx = end_x - start_x;
             var offsety = end_y - start_y;
             var key = "";
             if (Math.abs(offsetx) > Math.abs(offsety)) {
