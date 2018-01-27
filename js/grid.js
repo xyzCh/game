@@ -71,26 +71,6 @@ var Grid = (function () {
         CELL_SIZE = $("Origin").offsetWidth + 10;
         appendCell();
         appendCell();
-                var start_x, start_y, end_x, end_y;
-        $("Grid").ontouchstart = function (e) {
-            e.preventDefault();
-            start_x = e.changedTouches[0].clientX;
-            start_y = e.changedTouches[0].clientY;
-        }
-        $("Grid").ontouchend = function (e) {
-            e.preventDefault();
-            end_x = e.changedTouches[0].clientX;
-            end_y = e.changedTouches[0].clientY;
-            var offsetx = end_x - start_x;
-            var offsety = end_y - start_y;
-            var key = "";
-            if (Math.abs(offsetx) > Math.abs(offsety)) {
-                key = offsetx > 0 ? "d" : "a";
-            } else {
-                key = offsety > 0 ? "s" : "w";
-            }
-            active(key);
-        }
     }
     function _init() {
         window.onresize = Redraw;
@@ -98,7 +78,27 @@ var Grid = (function () {
             active(e.key);
         }
         if (document.readyState != "complete")
-            setTimeout(init, 1);
+            setTimeout(function(){
+                init();
+                var start_x, start_y, end_x, end_y;
+                $("Grid").ontouchstart = function (e) {
+                    start_x = e.changedTouches[0].clientX;
+                    start_y = e.changedTouches[0].clientY;
+                }
+                $("Grid").ontouchend = function (e) {
+                    end_x = e.changedTouches[0].clientX;
+                    end_y = e.changedTouches[0].clientY;
+                    var offsetx = end_x - start_x;
+                    var offsety = end_y - start_y;
+                    var key = "";
+                    if (Math.abs(offsetx) > Math.abs(offsety)) {
+                        key = offsetx > 0 ? "d" : "a";
+                    } else {
+                        key = offsety > 0 ? "s" : "w";
+                    }
+                    active(key);
+                }
+            }, 1);
     }
 
     function active(key) {
