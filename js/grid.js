@@ -82,10 +82,12 @@ var Grid = (function () {
                 init();
                 var start_x, start_y, end_x, end_y;
                 $("Grid").ontouchstart = function (e) {
+                    e.preventDefault();
                     start_x = e.changedTouches[0].clientX;
                     start_y = e.changedTouches[0].clientY;
                 }
                 $("Grid").ontouchend = function (e) {
+                    e.preventDefault();
                     end_x = e.changedTouches[0].clientX;
                     end_y = e.changedTouches[0].clientY;
                     var offsetx = end_x - start_x;
