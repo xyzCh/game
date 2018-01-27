@@ -78,12 +78,12 @@ var Grid = (function () {
             active(e.key);
         }
         var start_x, start_y, end_x, end_y;
-        document.ontouchstart = function (e) {
+        $("Grid").ontouchstart = function (e) {
             e.preventDefault();
             start_x = e.changedTouches[0].clientX;
             start_y = e.changedTouches[0].clientY;
         }
-        document.ontouchend = function (e) {
+        $("Grid").ontouchend = function (e) {
             e.preventDefault();
             end_x = e.changedTouches[0].clientX;
             end_y = e.changedTouches[0].clientY;
