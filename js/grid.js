@@ -1,14 +1,16 @@
-﻿var Grid = (function () {
+var Grid = (function () {
     var ORIGIN_X = 0;   //原点坐标(px)
     var ORIGIN_Y = 0;  
     var GRID_ARR;   //Grid数组
+    var CELL_SIZE;
     var CELL_NUM = 0;   //随机数
     var SEED_X = 0;     //随机数坐标(单位坐标)
     var SEED_Y = 0;
     var SCORE;      //得分
+    var BEST;
     var ISMOVE;
     var ISAPPEN;
-    var Colors = { 2: "#9e9e9e", 4: "#607d8b", 8: "#795548", 16: "#4caf50", 32: "#009688", 64: "#2196f3", 128: "#3f51b5", 256: "#673ab7", 512: "#9c27b0", 1024: "e91e63", 2048: "#e8382b" };
+    var Colors = { 2: "#9e9e9e", 4: "#607d8b", 8: "#795548", 16: "#4caf50", 32: "#009688", 64: "#2196f3", 128: "#3f51b5", 256: "#673ab7", 512: "#9c27b0", 1024: "#e91e63", 2048: "#e8382b" };
 
     function $(id) {
         return document.getElementById(id);
@@ -27,8 +29,6 @@
         var cell = document.createElement("div");
         cell.className = "Cell A_Cell";
         while (true) {
-            if((","+GRID_ARR.toString()+",").indexOf(",0,")<0)
-                break;
             SEED_X = random_xy();
             SEED_Y = random_xy();
             CELL_NUM = random_num();
@@ -36,7 +36,7 @@
                 cell.id = "Cell" + SEED_Y+SEED_X;
                 GRID_ARR[SEED_Y][SEED_X] = CELL_NUM;
                 cell.innerHTML = CELL_NUM;
-                cell.style.cssText = "left:" + (ORIGIN_X + SEED_X * 90) + "px;top:" + (ORIGIN_Y + SEED_Y * 90) + "px;background-color:"+Colors[CELL_NUM];
+                cell.style.cssText = "left:" + (ORIGIN_X + SEED_X * CELL_SIZE) + "px;top:" + (ORIGIN_Y + SEED_Y * CELL_SIZE) + "px;background-color:" + Colors[CELL_NUM];
                 $("Cells").appendChild(cell);
                 break;
             }
@@ -45,45 +45,87 @@
         ISMOVE=true;
     }
 
+    function Redraw(){
+        ORIGIN_X = $("Origin").offsetLeft;
+        ORIGIN_Y = $("Origin").offsetTop;
+        CELL_SIZE = $("Origin").offsetWidth + 10;
+        var changeCells = $("Cells").childNodes;
+        for (var i = 0; i < changeCells.length; i++) {
+            var x=changeCells[i].id[4];
+            var y=changeCells[i].id[5];
+            changeCells[i].style.left = ORIGIN_X + y * CELL_SIZE + "px";
+            changeCells[i].style.top = ORIGIN_Y + x * CELL_SIZE + "px";
+        }
+    }
+
     //target:目标元素(面板）
     function init() {
         $("Cells").innerHTML="";
-        $("score").innerHTML="0";
+        $("score").innerHTML = "0";
+        BEST = localStorage.getItem("bestScore2048") || 0;
+        $("best").innerHTML = BEST;
         SCORE=0;
-        ISAPPEN=true;
-        ISMOVE = false;
         GRID_ARR=[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
         ORIGIN_X = $("Origin").offsetLeft;
         ORIGIN_Y = $("Origin").offsetTop;
+        CELL_SIZE = $("Origin").offsetWidth + 10;
         appendCell();
         appendCell();
+    }
+    function _init() {
+        window.onload = function () {
+            event.preventDefault();
+        }
+        window.onresize = Redraw;
         document.onkeyup = function (e) {
-            if(ISMOVE&&ISAPPEN){
-                switch (e.key) {
-                    case "w":  UP(); break;
-                    case "s":  DOWN(); break;
-                    case "a":  LEFT(); break;
-                    case "d":  RIGHT(); break;
-                }
-                if (ISAPPEN&&!ISMOVE){
-                    ISAPPEN=false;
-                    appendCell();
-                    if (!CHECK()) {
-                        ISMOVE = false;
-                        setTimeout(function(){
-                            alert("Game Over!总分数："+SCORE);
-                            init();
-                        },300);
-                    }
+            active(e.key);
+        }
+        var start_x, start_y, end_x, end_y;
+        document.ontouchstart = function (e) {
+            start_x = e.changedTouches[0].clientX;
+            start_y = e.changedTouches[0].clientY;
+        }
+        document.ontouchend = function (e) {
+            end_x = e.changedTouches[0].clientX;
+            end_y = e.changedTouches[0].clientY;
+            var offsetx = end_x - start_y;
+            var offsety = end_y - start_y;
+            var key = "";
+            if (Math.abs(offsetx) > Math.abs(offsety)) {
+                key = offsetx > 0 ? "d" : "a";
+            } else {
+                key = offsety > 0 ? "s" : "w";
+            }
+            active(key);
+        }
+        if (document.readyState != "complete")
+            setTimeout(init, 1);
+    }
+
+    function active(key) {
+        if (ISMOVE && ISAPPEN) {
+            switch (key) {
+                case "w": UP(); break;
+                case "s": DOWN(); break;
+                case "a": LEFT(); break;
+                case "d": RIGHT(); break;
+            }
+            if (ISAPPEN && !ISMOVE) {
+                ISAPPEN = false;
+                appendCell();
+                if (!CHECK()) {
+                    ISMOVE = false;
+                    Done(0);
                 }
             }
         }
     }
-
     return {
-        Init: init,
+        Restart:init,
+        Init: _init,
         getGrid: function () { return GRID_ARR; },
-        getScore: function () { return SCORE;}
+        getScore: function () { return SCORE; },
+        Redraw: Redraw
     }
 
     function UP() {
@@ -196,7 +238,7 @@
         }
     }
     function GRID_MOVE(old_x,old_y,x,y,num) {
-        $("Cell" + x + y).style.cssText = "left:" + (ORIGIN_X + old_y * 90) + "px;top:" + (ORIGIN_Y + old_x * 90) + "px;background-color:"+Colors[GRID_ARR[old_x][old_y]]+";";
+        $("Cell" + x + y).style.cssText = "left:" + (ORIGIN_X + old_y * CELL_SIZE) + "px;top:" + (ORIGIN_Y + old_x * CELL_SIZE) + "px;background-color:" + Colors[GRID_ARR[old_x][old_y]] + ";";
         var old_cell = $("Cell" + old_x + old_y);
         var new_cell = $("Cell" + x + y);
         new_cell.className = "Cell";
@@ -210,6 +252,10 @@
             }, 100);
         }
         ISMOVE = false;
+        if (num == 2048) {
+            ISAPPEN = false;
+            Done(1);
+        }
     }
 
     function CHECK(){
@@ -229,5 +275,15 @@
             }
         }
         return false;
+    }
+
+    function Done(status) {
+        var msg = status == 1 ? "You Win! score：" : "Game Over! score:";
+        if (SCORE > BEST)
+            localStorage.setItem("bestScore2048", SCORE);
+        setTimeout(function () {
+            alert(msg + SCORE);
+            init();
+        }, 300);
     }
 })();
