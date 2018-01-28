@@ -138,8 +138,8 @@ var Grid = (function () {
                     if (tmp == GRID_ARR[j][i]) {
                         GRID_ARR[k][i] = tmp + GRID_ARR[j][i];
                         GRID_ARR[j][i] = 0;
-                        GRID_MOVE(k, i, j, i,GRID_ARR[k][i]);
                         SCORE += tmp * 2;
+                        GRID_MOVE(k, i, j, i,GRID_ARR[k][i]);
                     } else if (GRID_ARR[j][i] != 0) {
                         if (k + 1 != j) {
                             GRID_ARR[k + 1][i] = GRID_ARR[j][i];
@@ -165,8 +165,9 @@ var Grid = (function () {
                     if (tmp == GRID_ARR[j][i]) {
                         GRID_ARR[k][i] = tmp + GRID_ARR[j][i];
                         GRID_ARR[j][i] = 0;
-                        GRID_MOVE(k, i, j, i,GRID_ARR[k][i]);
                         SCORE += tmp * 2;
+                        GRID_MOVE(k, i, j, i,GRID_ARR[k][i]);
+
                     } else if (GRID_ARR[j][i] != 0) {
                         if (k - 1 != j) {
                             GRID_ARR[k - 1][i] = GRID_ARR[j][i];
@@ -192,8 +193,8 @@ var Grid = (function () {
                     if (tmp == GRID_ARR[i][j]) {
                         GRID_ARR[i][k] = tmp + GRID_ARR[i][j];
                         GRID_ARR[i][j] = 0;
-                        GRID_MOVE(i, k, i, j,GRID_ARR[i][k]);
                         SCORE += tmp * 2;
+                        GRID_MOVE(i, k, i, j,GRID_ARR[i][k]);
                     } else if (GRID_ARR[i][j] != 0) {
                         if (k + 1 != j) {
                             GRID_ARR[i][k + 1] = GRID_ARR[i][j];
@@ -220,8 +221,8 @@ var Grid = (function () {
                     if (tmp == GRID_ARR[i][j]) {
                         GRID_ARR[i][k] = tmp + GRID_ARR[i][j];
                         GRID_ARR[i][j] = 0;
-                        GRID_MOVE(i, k, i, j,GRID_ARR[i][k]);
                         SCORE += tmp * 2;
+                        GRID_MOVE(i, k, i, j,GRID_ARR[i][k]);
                     } else if (GRID_ARR[i][j] != 0) {
                         if (k - 1 != j) {
                             GRID_ARR[i][k - 1] = GRID_ARR[i][j];
