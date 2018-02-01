@@ -74,7 +74,7 @@ var Grid = (function () {
     }
     function _init() {
         window.onresize = Redraw;
-        document.onkeyup = function (e) {
+        document.onkeydown = function (e) {
             active(e.key);
         }
         if (document.readyState != "complete")
