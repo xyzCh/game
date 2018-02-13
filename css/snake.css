@@ -1,0 +1,104 @@
+        html{
+            user-select:none;
+        }
+        #panel{
+            width:241px;
+            height:361px;
+            position:fixed;
+            margin:auto;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            border:1px solid #ccc;
+        }
+        #Grid,#Snake,#Food{
+            font-size:0;
+            position:relative;
+            float:left;
+        }
+        .bg_del,.snake_del{
+            width:7px;
+            height:7px;
+            border:1px solid #ccc;
+            display:inline-block;
+            margin:1px 0 0 1px;
+            position:relative;
+        }
+        .bg_del:before,.snake_del:before{
+            display:block;
+            content:'';
+            width:5px;
+            height:5px;
+            border-radius:5px;
+            background:#ccc;
+            margin:auto;
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+        }
+        .snake_del{
+            position:absolute;
+            border:1px solid #000;
+            z-index:998;
+        }
+        .snake_del:before{
+            background:#000;
+        }
+
+        .snake_del:first-child{
+            position:absolute;
+            border:1px solid red;
+            z-index:999;
+        }
+        .snake_del:first-child:before{
+            background:red;
+        }
+        #Food .snake_del{
+            border:1px solid blue;
+            z-index:998;
+        }
+        #Food .snake_del:before{
+            background:blue;
+        }
+        #Dialog {
+            background:rgba(255,255,255,0.9);
+            position:absolute;
+            margin:auto;
+            top:0;
+            left:0;
+            bottom:0;
+            right:0;
+            width:300px;
+            height:150px;
+            box-shadow:0 0 3px 1px #ddd;
+            border-radius:3px;
+            display:none;
+        }
+	#score{
+            color:#0275b0;
+            text-align:center;
+            margin:5px 0 20px 0;
+        }
+	#again {
+            width:80px;
+            height:30px;
+            line-height:30px;
+            border-radius:5px;
+            margin:auto;
+            font-size:13px;
+            text-align:center;
+            font-weight:bold;
+            color:#0275b0;
+            border:1px solid #0275b0;
+            cursor:pointer;
+        }
+	#title {
+            font-size:22px;
+            color:#808080;
+            text-align:center;
+            font-weight:bold;
+            margin-top:15px;
+        }
