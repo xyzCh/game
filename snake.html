@@ -1,77 +1,26 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <style>
-        #panel{
-            width:241px;
-            height:361px;
-            position:fixed;
-            margin:auto;
-            top:0;
-            bottom:0;
-            left:0;
-            right:0;
-            border:1px solid #838383;
-        }
-        #Grid,#Snake,#Food{
-            font-size:0;
-            position:relative;
-        }
-        .bg_del,.snake_del{
-            width:7px;
-            height:7px;
-            border:1px solid #838383;
-            display:inline-block;
-            margin:1px 0 0 1px;
-            position:relative;
-        }
-        .bg_del:before,.snake_del:before{
-            display:block;
-            content:'';
-            width:5px;
-            height:5px;
-            border-radius:5px;
-            background:#999;
-            margin:auto;
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            bottom:0;
-        }
-
-        #Snake{
-            float:left;
-        }
-        .snake_del{
-            position:absolute;
-            border:1px solid #000;
-            z-index:998;
-        }
-        .snake_del:before{
-            background:#000;
-        }
-
-        .snake_del:first-child{
-            position:absolute;
-            border:1px solid red;
-            z-index:999;
-        }
-        .snake_del:first-child:before{
-            background:red;
-        }
-        #Food .snake_del{
-            border:1px solid blue;
-            z-index:998;
-        }
-        #Food .snake_del:before{
-            background:blue;
-        }
-    </style>
-    <script src="js/snake.js"></script>
+    <link type="text/css" rel="stylesheet" href="snake.css" />
+    <script src="snake.js"></script>
     <script>
-        grid.init(function (data) {
-            alert(data.score);
+        grid.init({
+            onSnakeDeath: function (data) {
+                var dialog = document.getElementById("Dialog");
+                var score = document.getElementById("score");
+                var again = document.getElementById("again");
+                score.innerHTML = "score:"+data.score+" best:"+data.best;
+                Dialog.style.display = "block";
+                again.onclick = function () {
+                    dialog.style.display = "none";
+                    grid.restart();
+                }
+            }
+            , onEatFood: function (data) {
+                if (data%50==0&&data<400) {
+                    grid.setspeed(data/50);
+                }
+            }
         });
     </script>
 </head>
@@ -80,6 +29,11 @@
         <div id="Snake"></div>
         <div id="Food"></div>
         <div id="Grid"></div>
+    </div>
+    <div id="Dialog">
+        <div id="title">You Lost</div>
+        <div id="score" ></div>
+        <div id="again" >try again</div>
     </div>
 </body>
 </html>
