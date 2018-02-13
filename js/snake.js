@@ -9,7 +9,7 @@ var grid = (function () {
             var Direction = "w";
             var timer;
             var LostListener,EatListener;
-            var speed = 0;
+            var speed = 6;
             var isdone = true;
 
             var $ = function (id) {
