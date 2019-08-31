@@ -1,0 +1,81 @@
+﻿@font-face {font-family: "wawa";
+	src: url('../font/DFPWaWa-B5.ttf') format('truetype')
+}
+
+html,body{
+	height:100%;
+	margin:0;
+	padding:0;
+}
+
+#main{
+	height:100%;
+	background:center url('../img/首页2.png') no-repeat;
+	background-size:cover;
+}
+
+#menu{
+	list-style:none;
+	margin:auto;
+	padding:0;
+	width:35%;
+	position:absolute;
+	left:0;
+	right:0;
+	top:58%;
+	bottom:0;
+}
+#menu li{
+	height:17%;
+}
+
+#menu li:nth-child(1){
+	background:center url('../img/开始.png') no-repeat;
+	background-size:contain;
+}
+#menu li:nth-child(2){
+	background:center url('../img/分享.png') no-repeat;
+	background-size:contain;
+}
+#menu li:nth-child(3){
+	background:center url('../img/规则.png') no-repeat;
+	background-size:contain;
+	
+}
+
+#mask{
+	position:fixed;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	margin:auto;
+	background-color:rgba(0,0,0,0.6);
+	display:none;
+}
+
+.confirm-win{
+	position:relative;
+	top:30%;
+	text-align:center;
+}
+
+.confirm-close{
+	position:absolute;
+	width:12%;
+	top:0;
+	right:6%;
+}
+.rule-content{
+	width: 65%;
+	height: 78%;
+	position: absolute;
+	top: 4%;
+	bottom: 0;
+	left: 0;
+	right: 2%;
+	margin: auto;
+	text-align:left;
+	font-family:wawa;
+	color:#666;
+}
