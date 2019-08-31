@@ -1,0 +1,185 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>校园大扫除</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+		<link type="text/css" rel="stylesheet" href="style/game.css" >
+		<style>
+			@font-face {font-family: "wawa";
+			  src: url('font/DFPWaWa-B5.ttf') format('truetype')
+			}
+			#time{
+				font-family:wawa;
+			}
+			
+			.box-item-success{
+				box-shadow:0 0 6px 2px #36d634;
+			}
+
+			#tips{
+				width:5em;
+				height:4em;
+				line-height:4em;
+				position:absolute;
+				top:0;
+				right:0;
+				bottom:0;
+				left:0;
+				margin:auto;
+				background-repeat:no-repeat;
+				background-size:contain;
+				background-position:center;
+				color:#70eeff;
+				font-weight:bold;
+				text-align:center;
+				font-family:wawa;
+			}
+			
+			.loadTips{
+				animation:tipsOut 1.5s forwards;
+			}
+			@keyframes tipsOut{
+				60%{
+					transform:scale(1);
+					opacity:1;
+				}
+				100%{
+					transform:scale(3);
+					opacity:0;
+				}
+			}
+		</style>
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+		<script src="script/SG.js"></script>
+		<script>
+            $(function(){
+		        var clock=new SGClock();
+				clock.onCycle=function(time){
+					var m=Math.floor(time/60);
+					var s=time%60;
+					$("#time").text((m>9?m:"0"+m+":")+(s>9?s:"0"+s));
+				}
+				
+				SG.start({
+					onGameStart:function(e){
+						bootloder(e,clock);
+					},
+					onDragSuccess:function(e){
+						drag(e);
+					},
+					onDragFailed:function(e){
+						resetGoods(e)
+					},
+					onLevelUpBefore:function(e){
+						$(".box-item-success").removeClass("box-item-success");
+						clock.pause();
+					},
+					onLevelUpAfter:function(e){
+						//SG.showGoods();	/* 关卡加载时默认隐藏物品,此处显示物品 */
+						showTips(e.Level,clock);
+					},
+					onGameWin:function(e){
+						drag(e);
+						GameWin(clock.stop());
+					}
+				});
+			})
+			
+			/*
+			 * 3,2,1倒计时
+			 */
+			function bootloder(e,clock){
+				$("#tips").html(3).css("font-size","48px");
+				var _clock=new SGClock();
+				_clock.onCycle=function(time){
+					if(time==3){
+						this.stop();
+						$("#tips").html("").css("font-size","");
+						showTips(e.Level,clock);
+					}else{
+						$("#tips").html(3-time);
+					}
+				}
+				_clock.start();
+			}
+			
+			/*
+			 * 关卡引导显示
+			 */
+			function showTips(level,clock){
+				$(".mask-launch").show();
+				$("#tips").css("background-image","url('img/Lv."+level+".png')");
+				setTimeout(function(){
+					$(".mask-launch").hide();
+					$("#tips").removeClass("loadTips");
+					clock.start();
+					SG.showGoods();
+				},1500);
+				$("#tips").addClass("loadTips");
+			}
+			/*
+			 * 放置正确
+			 */
+			function drag(e){
+				$(e.targetEle.ele).addClass("box-item-success");
+				$(e.sourceEle.ele).fadeOut()
+			}
+			
+			/*
+			 * 放置错误
+			 */
+			function resetGoods(e){
+				$(e.sourceEle.ele).css("top",e.sourceEle.offsetTop+"px");
+				$(e.sourceEle.ele).css("left",e.sourceEle.offsetLeft+"px");
+			}
+			
+			/*
+			 * 游戏结束
+			 */
+			function GameWin(score) {
+				var m=Math.floor(score/60);
+				var s=score%60;
+				$(".score").html(m+"分"+(s>9?s:"0"+s)+"秒");
+				$(".mask-finish").show();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="Grid">
+			<div id="tool">
+                <span id="level"></span>
+                <div id="time">00:00</div>
+            </div>
+            <div class="goods">
+                <div class="goods-item"></div>
+                <div class="goods-item"></div>
+                <div class="goods-item"></div>
+            </div>
+            <div class="box">
+                <ul>
+                    <li><span class="box-item"></span></li>
+                    <li><span class="box-item"></span></li>
+                    <li><span class="box-item"></span></li>
+                </ul>
+            </div>
+		</div>
+		<div class="mask-launch mask"><div id="tips"></div></div>
+		<div class="mask-finish mask" style="display:none">
+			<div class="confirm-win">
+				<img src="img/弹窗.png" style="width:82%" />
+				<img class="confirm-close" src="img/叉.png" onclick="$('.mask-finish').fadeOut();"/>
+				<div class="content">
+					<h3>最佳排名No.001</h3>
+					<div style="text-align:center;">
+						<h2>您的成绩</h2>
+						<h1 class="score">2分03秒</h1>
+					</div>
+					<div style="position:absolute;bottom:0;height:20%;width:100%;text-align:center;">
+						<span class="btn btn-shared"></span>
+						<span class="btn btn-ranking"></span>
+					<div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

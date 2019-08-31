@@ -1,0 +1,45 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>校园大扫除</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+		<link type="text/css" rel="stylesheet" href="style/main.css" >
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+		<script>
+			$(function(){
+			    $("#start").click(function () {
+			    	location.href = "game.html";
+				});
+				
+				$("#shared").click(function(){
+				
+				});
+				
+				$("#rule").click(function(){
+					$("#mask").fadeIn();
+				});
+				$(".confirm-close").click(function(){
+					$("#mask").fadeOut();
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="main">
+			<ul id="menu">
+				<li id="start"></li>
+				<li id="shared"></li>
+				<li id="rule"></li>
+			</ul>
+		</div>
+		<div id="mask">
+			<div class="confirm-win">
+				<img src="img/弹窗.png" style="width:82%" />
+				<img class="confirm-close" src="img/叉.png"/>
+				<div class="rule-content">
+					123
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
